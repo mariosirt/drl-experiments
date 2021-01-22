@@ -7,8 +7,8 @@ For my bachelor thesis I want to create more meaningful visualisations of the De
 - [x] Deep Q Network (DQN) 
 - [x] Double Deep Q Network (DDQN)
 - [x] Dueling Deep Q Network 
-- [] Deep Deterministic Policy Gradient
-- [] A3C
+- [ ] Deep Deterministic Policy Gradient
+- [ ] A3C
 ...
 
 ## Deep Q Learning 

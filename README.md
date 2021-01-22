@@ -4,11 +4,11 @@
 For my bachelor thesis I want to create more meaningful visualisations of the Deep Reinforcement Learning (DRL) Process. This repository is solely for the use of experiments within DRL.
 
 ## Implemented DRL algorithms
-[x] Deep Q Network (DQN)
-[x] Double Deep Q Network (DDQN)
-[x] Dueling Deep Q Network 
-[] Deep Deterministic Policy Gradient
-[] A3C
+- [x] Deep Q Network (DQN) 
+- [x] Double Deep Q Network (DDQN)
+- [x] Dueling Deep Q Network 
+- [] Deep Deterministic Policy Gradient
+- [] A3C
 ...
 
 ## Deep Q Learning 

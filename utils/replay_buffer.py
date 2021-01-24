@@ -53,8 +53,6 @@ class ReplayBuffer:
             self.rewards_history.append(reward)
         self.buffer_count += 1
 
-   
-
     def sample(self, batch_size):
         """Returns a mini_batch sampled from the ReplayBuffer
 

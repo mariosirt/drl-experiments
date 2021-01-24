@@ -208,7 +208,7 @@ class Agent():
         optimizer.apply_gradients(
             zip(grads, self.model.trainable_variables))
 
-    def test(self, max_episodes, max_episode_steps):
+    def test(self, max_episodes, max_episode_steps, render):
         """Method for testing a dqn model
 
         Parameters
@@ -218,15 +218,19 @@ class Agent():
 
         max_episodes: int
             maximum number of episode per training
+        render: bool
+            indicator whether to render or not
         """
-
+        episode_rewards = []
         for episode_count in range(0, max_episodes):
             state = np.array(self.env.reset())
             episode_reward = 0
 
             for _ in range(1, max_episode_steps):
-                self.env.render()
-                time.sleep(0.05)
+                if render:
+                    self.env.render()
+                    time.sleep(0.05)
+                
                 self.frame_count += 1
 
                 random = True
@@ -253,6 +257,8 @@ class Agent():
 
             tf.summary.scalar("episode_reward",
                               data=episode_reward, step=episode_count)
+            episode_rewards.append(episode_reward)
+        print("END OF TESTING AFTER {} EPISODES WITH AVG PERFORMANCE OF {} PER EPISODE ".format(episode_count, np.mean(episode_rewards)))
 
     def select_action_greedily(self, state):
         """Return an action greedily based on current dqn predictions

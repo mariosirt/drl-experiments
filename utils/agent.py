@@ -5,8 +5,8 @@ import tensorflow as tf
 import numpy as np
 
 
-from replay_buffer import ReplayBuffer
-from models import Models
+from utils.replay_buffer import ReplayBuffer
+from utils.models import Models
 
 
 class Agent():
@@ -124,7 +124,6 @@ class Agent():
                 if self.frame_count % save_model_steps == 0:
                     Models.save_model(self.model, save_model_path)
 
-                memory.bufferfy()
 
                 if done:
                     break

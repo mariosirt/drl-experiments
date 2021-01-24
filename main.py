@@ -2,9 +2,9 @@
 
 import argparse
 
-from agent import Agent
-from models import Models
-from atari_wrappers import wrap_deepmind, make_atari
+from utils.agent import Agent
+from utils.models import Models
+from utils.atari_wrappers import wrap_deepmind, make_atari
 
 SEED = 42
 

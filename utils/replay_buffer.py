@@ -15,6 +15,7 @@ class ReplayBuffer:
         self.state_next_history = []
         self.rewards_history = []
         self.done_history = []
+        self.buffer_count = 0
         self.size = size
 
     def __len__(self):
@@ -36,21 +37,23 @@ class ReplayBuffer:
         reward: int
             a scalar reward as feedback for an action
         """
-        self.action_history.append(action)
-        self.state_history.append(state)
-        self.state_next_history.append(state_next)
-        self.done_history.append(done)
-        self.rewards_history.append(reward)
 
-    def bufferfy(self):
-        """Restore replay_buffer property of being cyclic.
-        (Delete first value if size is to large)"""
-        if len(self.rewards_history) > self.size:
-            del self.action_history[:1]
-            del self.state_history[:1]
-            del self.state_next_history[:1]
-            del self.rewards_history[:1]
-            del self.done_history[:1]
+        if self.buffer_count >= self.size:
+            self.action_history[self.buffer_count%self.size] = action
+            self.state_history[self.buffer_count%self.size] = state
+            self.state_next_history[self.buffer_count%self.size] = state_next
+            self.done_history[self.buffer_count%self.size] = done
+            self.rewards_history[self.buffer_count%self.size] = reward
+
+        else:
+            self.action_history.append(action)
+            self.state_history.append(state)
+            self.state_next_history.append(state_next)
+            self.done_history.append(done)
+            self.rewards_history.append(reward)
+        self.buffer_count += 1
+
+   
 
     def sample(self, batch_size):
         """Returns a mini_batch sampled from the ReplayBuffer

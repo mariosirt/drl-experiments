@@ -25,7 +25,8 @@ UPDATE_TARGET_NETWORK = 10000
 SAVE_MODEL_STEPS = 1000000
 SAVE_MODEL_PATH = "models_save/"
 LEARNING_RATE = 0.00025
-INPUT_DIMS = (84, 84, 4,)
+INPUT_DIMS = (210, 160, 3,)
+#INPUT_DIMS = (84,84,4,)
 
 parser = argparse.ArgumentParser(description="dqn and dueling dqn")
 parser.add_argument("--dueling", type=int, default=0,
@@ -42,9 +43,10 @@ args = parser.parse_args()
 
 if __name__ == "__main__":
     env = make_atari(args.env)
-    env = wrap_deepmind(env, episode_life=True,
-                        clip_rewards=True, frame_stack=True, scale=True)
+    #env = wrap_deepmind(env, episode_life=True,
+                     #   clip_rewards=True, frame_stack=True, scale=True)
 
+    print(env.observation_space.shape)
     num_actions = env.action_space.n
 
     model = Models.dqn(INPUT_DIMS, num_actions)
@@ -54,8 +56,8 @@ if __name__ == "__main__":
         print("TESTING")
 
         env = make_atari(args.env)
-        env = wrap_deepmind(env, episode_life=True,
-                            clip_rewards=False, frame_stack=True, scale=True)
+        #env = wrap_deepmind(env, episode_life=False,
+                #            clip_rewards=False, frame_stack=True, scale=True)
 
         path = args.test
         model_test = Models.load_model(path)

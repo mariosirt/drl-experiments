@@ -3,7 +3,7 @@ import time
 import tensorflow.keras as keras
 import tensorflow as tf
 import numpy as np
-
+#import matplotlib.pyplot as plt
 
 from utils.replay_buffer import ReplayBuffer
 from utils.models import Models
@@ -92,9 +92,11 @@ class Agent():
             state = np.array(self.env.reset())
             episode_reward = 0
 
-            for _ in range(1, max_episode_steps):
+            for t in range(0, max_episode_steps):
                 self.frame_count += 1
-
+                # print(state.shape)
+                # print(np.max(state*255))
+                # plt.imsave("test{}.png".format(t),arr=state*255)
                 random = True
                 if self.frame_count < epsilon_random_frames or self.epsilon > np.random.rand(1)[0]:
                     action = np.random.choice(self.num_actions)
@@ -110,6 +112,9 @@ class Agent():
                 tf.summary.scalar("reward", data=reward, step=self.frame_count)
                 tf.summary.scalar("action", data=action, step=self.frame_count)
 
+                tf.summary.image(name="episode{}".format(episode_count), data=tf.expand_dims(state, 0), step=t)
+
+
                 memory.add(action, state, state_next, done, reward)
 
                 state = np.array(state_next)
@@ -123,7 +128,6 @@ class Agent():
 
                 if self.frame_count % save_model_steps == 0:
                     Models.save_model(self.model, save_model_path)
-
 
                 if done:
                     break
@@ -226,11 +230,11 @@ class Agent():
             state = np.array(self.env.reset())
             episode_reward = 0
 
-            for _ in range(1, max_episode_steps):
+            for t in range(0, max_episode_steps):
                 if render:
                     self.env.render()
                     time.sleep(0.05)
-                
+
                 self.frame_count += 1
 
                 random = True
@@ -248,6 +252,7 @@ class Agent():
                 episode_reward += reward
                 tf.summary.scalar("reward", data=reward, step=self.frame_count)
                 tf.summary.scalar("action", data=action, step=self.frame_count)
+                tf.summary.image(name="episode{}".format(episode_count), data=tf.expand_dims(state, 0), step=t)
 
                 state = state_next
 
@@ -258,7 +263,8 @@ class Agent():
             tf.summary.scalar("episode_reward",
                               data=episode_reward, step=episode_count)
             episode_rewards.append(episode_reward)
-        print("END OF TESTING AFTER {} EPISODES WITH AVG PERFORMANCE OF {} PER EPISODE ".format(episode_count, np.mean(episode_rewards)))
+        print("END OF TESTING AFTER {} EPISODES WITH AVG PERFORMANCE OF {} PER EPISODE ".format(
+            episode_count, np.mean(episode_rewards)))
 
     def select_action_greedily(self, state):
         """Return an action greedily based on current dqn predictions

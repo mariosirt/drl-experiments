@@ -17,7 +17,7 @@ The basic DQN implementation is based upon the [original Nature Paper from Mnih 
 
 ### Agent Example Play
 <p align="center">
-    <img src="assets/Example_Breakout.gif" height="400">
+    <img src="assets/example_breakout.gif" height="400">
 </p>
 
 ## Dependencies

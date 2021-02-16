@@ -231,8 +231,8 @@ class Agent():
             episode_reward = 0
 
             for t in range(0, max_episode_steps):
-                frame_img = self.env.render(mode="rgb_array")
-                plt.imsave("frames/frame{}.png".format(t), frame_img)
+                #frame_img = self.env.render(mode="rgb_array")
+                #plt.imsave("frames/frame{}.png".format(t), frame_img)
                 if render:
                     self.env.render()
                     time.sleep(0.05)

@@ -3,7 +3,7 @@ import time
 import tensorflow.keras as keras
 import tensorflow as tf
 import numpy as np
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 from utils.replay_buffer import ReplayBuffer
 from utils.models import Models
@@ -112,8 +112,8 @@ class Agent():
                 tf.summary.scalar("reward", data=reward, step=self.frame_count)
                 tf.summary.scalar("action", data=action, step=self.frame_count)
 
-                tf.summary.image(name="episode{}".format(episode_count), data=tf.expand_dims(state, 0), step=t)
-
+                tf.summary.image(name="episode{}".format(
+                    episode_count), data=tf.expand_dims(state, 0), step=t)
 
                 memory.add(action, state, state_next, done, reward)
 
@@ -231,6 +231,8 @@ class Agent():
             episode_reward = 0
 
             for t in range(0, max_episode_steps):
+                #frame_img = self.env.render(mode="rgb_array")
+                #plt.imsave("frames/frame{}.png".format(t), frame_img)
                 if render:
                     self.env.render()
                     time.sleep(0.05)
@@ -252,7 +254,8 @@ class Agent():
                 episode_reward += reward
                 tf.summary.scalar("reward", data=reward, step=self.frame_count)
                 tf.summary.scalar("action", data=action, step=self.frame_count)
-                tf.summary.image(name="episode{}".format(episode_count), data=tf.expand_dims(state, 0), step=t)
+                tf.summary.image(name="episode{}".format(
+                    episode_count), data=tf.expand_dims(state, 0), step=t)
 
                 state = state_next
 
